@@ -2,6 +2,69 @@
 import "./style.css";
 
 // Write Javascript code!
+const workspace = document.querySelector("div.main-app > div.workspace");
+const mainCanvas = document.querySelector("div.workspace > canvas.main-canvas");
+const mainCanvasCtx = mainCanvas.getContext("2d");
+const loadingMessage = document.querySelector("div.workspace > div.loading");
+const basicFiltersMenu = document.querySelector(
+  "section.right-menu-bar > div.basic-filters.menu-bar"
+);
+const brightnessSlider = basicFiltersMenu.querySelector(
+  'div.brightness > input[type="range"]'
+);
+const brightnessTextField = basicFiltersMenu.querySelector(
+  'div.brightness > input[type="text"]'
+);
+const contrastSlider = basicFiltersMenu.querySelector(
+  'div.contrast > input[type="range"]'
+);
+const contrastTextField = basicFiltersMenu.querySelector(
+  'div.contrast > input[type="text"]'
+);
+const highlightsSlider = basicFiltersMenu.querySelector(
+  'div.highlights > input[type="range"]'
+);
+const highlightsTextField = basicFiltersMenu.querySelector(
+  'div.highlights > input[type="text"]'
+);
+const shadowsSlider = basicFiltersMenu.querySelector(
+  'div.shadows > input[type="range"]'
+);
+const shadowsTextField = basicFiltersMenu.querySelector(
+  'div.shadows > input[type="text"]'
+);
+const whitesSlider = basicFiltersMenu.querySelector(
+  'div.whites > input[type="range"]'
+);
+const whitesTextField = basicFiltersMenu.querySelector(
+  'div.whites > input[type="text"]'
+);
+const blacksSlider = basicFiltersMenu.querySelector(
+  'div.blacks > input[type="range"]'
+);
+const blacksTextField = basicFiltersMenu.querySelector(
+  'div.blacks > input[type="text"]'
+);
+const claritySlider = basicFiltersMenu.querySelector(
+  'div.clarity > input[type="range"]'
+);
+const clarityTextField = basicFiltersMenu.querySelector(
+  'div.clarity > input[type="text"]'
+);
+const vibranceSlider = basicFiltersMenu.querySelector(
+  'div.vibrance > input[type="range"]'
+);
+const vibranceTextField = basicFiltersMenu.querySelector(
+  'div.vibrance > input[type="text"]'
+);
+const saturationSlider = basicFiltersMenu.querySelector(
+  'div.saturation > input[type="range"]'
+);
+const saturationTextField = basicFiltersMenu.querySelector(
+  'div.saturation > input[type="text"]'
+);
+
+// generate images links in array
 const imagesOrigLinkArray = [];
 const imagesThumbLinkArray = [];
 const imageIdsFromLoremPicsum = [
@@ -63,97 +126,33 @@ for (let i = 0; i < imageIdsFromLoremPicsum.length; i++) {
     );
   }
 }
+
 var filterValue = 0;
 var mainImage = new Image();
 mainImage.imageData = {};
-mainImage.sumOfChanges = {};
+mainImage.sumOfChanges = {
+  initial: 0,
+  brightness: 0,
+  contrast: 0,
+  highlights: 0,
+  shadows: 0,
+  whites: 0,
+  blacks: 0,
+  clarity: 0,
+  vibrance: 0,
+  saturation: 0
+};
+for (let property in mainImage.sumOfChanges) {
+  mainImage.sumOfChanges[property] = new Uint8ClampedArray(1200 * 1200 * 4);
+  mainImage.sumOfChanges[property].fill(128);
+}
 mainImage.sumOfChanges.changed = new Uint32Array(1200 * 1200 * 4);
-mainImage.sumOfChanges.initial = new Uint8ClampedArray(1200 * 1200 * 4); //W*H*GBA MAX VALUES
-mainImage.sumOfChanges.brightness = new Uint8ClampedArray(1200 * 1200 * 4);
-mainImage.sumOfChanges.brightness.fill(128);
-mainImage.sumOfChanges.contrast = new Uint8ClampedArray(1200 * 1200 * 4);
-mainImage.sumOfChanges.contrast.fill(128);
-mainImage.sumOfChanges.highlights = new Uint8ClampedArray(1200 * 1200 * 4);
-mainImage.sumOfChanges.highlights.fill(128);
-mainImage.sumOfChanges.shadows = new Uint8ClampedArray(1200 * 1200 * 4);
-mainImage.sumOfChanges.shadows.fill(128);
-mainImage.sumOfChanges.whites = new Uint8ClampedArray(1200 * 1200 * 4);
-mainImage.sumOfChanges.whites.fill(128);
-mainImage.sumOfChanges.blacks = new Uint8ClampedArray(1200 * 1200 * 4);
-mainImage.sumOfChanges.blacks.fill(128);
-mainImage.sumOfChanges.clarity = new Uint8ClampedArray(1200 * 1200 * 4);
-mainImage.sumOfChanges.clarity.fill(128);
-mainImage.sumOfChanges.vibrance = new Uint8ClampedArray(1200 * 1200 * 4);
-mainImage.sumOfChanges.vibrance.fill(128);
-mainImage.sumOfChanges.saturation = new Uint8ClampedArray(1200 * 1200 * 4);
-mainImage.sumOfChanges.saturation.fill(128);
 mainImage.sumOfChanges.after = new Uint32Array(1200 * 1200 * 4);
 
-// const workspace = document.querySelector("div.main-app > div.workspace");
-const mainCanvas = document.querySelector("div.workspace > canvas.main-canvas");
-const mainCanvasCtx = mainCanvas.getContext("2d");
-const loadingMessage = document.querySelector("div.workspace > div.loading");
 
-// var changeValue = 0;
 
 //^^^^^^^^^^^^^^^create right menu bar elements^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-const basicFiltersMenu = document.querySelector(
-  "section.right-menu-bar > div.basic-filters.menu-bar"
-);
-const brightnessSlider = basicFiltersMenu.querySelector(
-  'div.brightness > input[type="range"]'
-);
-const brightnessTextField = basicFiltersMenu.querySelector(
-  'div.brightness > input[type="text"]'
-);
-const contrastSlider = basicFiltersMenu.querySelector(
-  'div.contrast > input[type="range"]'
-);
-const contrastTextField = basicFiltersMenu.querySelector(
-  'div.contrast > input[type="text"]'
-);
-const highlightsSlider = basicFiltersMenu.querySelector(
-  'div.highlights > input[type="range"]'
-);
-const highlightsTextField = basicFiltersMenu.querySelector(
-  'div.highlights > input[type="text"]'
-);
-const shadowsSlider = basicFiltersMenu.querySelector(
-  'div.shadows > input[type="range"]'
-);
-const shadowsTextField = basicFiltersMenu.querySelector(
-  'div.shadows > input[type="text"]'
-);
-const whitesSlider = basicFiltersMenu.querySelector(
-  'div.whites > input[type="range"]'
-);
-const whitesTextField = basicFiltersMenu.querySelector(
-  'div.whites > input[type="text"]'
-);
-const blacksSlider = basicFiltersMenu.querySelector(
-  'div.blacks > input[type="range"]'
-);
-const blacksTextField = basicFiltersMenu.querySelector(
-  'div.blacks > input[type="text"]'
-);
-const claritySlider = basicFiltersMenu.querySelector(
-  'div.clarity > input[type="range"]'
-);
-const clarityTextField = basicFiltersMenu.querySelector(
-  'div.clarity > input[type="text"]'
-);
-const vibranceSlider = basicFiltersMenu.querySelector(
-  'div.vibrance > input[type="range"]'
-);
-const vibranceTextField = basicFiltersMenu.querySelector(
-  'div.vibrance > input[type="text"]'
-);
-const saturationSlider = basicFiltersMenu.querySelector(
-  'div.saturation > input[type="range"]'
-);
-const saturationTextField = basicFiltersMenu.querySelector(
-  'div.saturation > input[type="text"]'
-);
+
 //_________________end of create right menu bar elements_____________________
 //^^^^^^^^^^^^^^^^^create bottom slider elements^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -239,15 +238,6 @@ function createImageOnCanvas(positionInArray) {
     for (let i = 0; i < mainImage.imageData.data.length; i++) {
       mainImage.sumOfChanges.initial[i] = mainImage.imageData.data[i];
       mainImage.sumOfChanges.changed[i] = mainImage.imageData.data[i];
-      // mainImage.sumOfChanges.brightness[i] = mainImage.imageData.data[i];
-      // mainImage.sumOfChanges.contrast[i] = mainImage.imageData.data[i];
-      // mainImage.sumOfChanges.highlights[i] = mainImage.imageData.data[i];
-      // mainImage.sumOfChanges.shadows[i] = mainImage.imageData.data[i];
-      // mainImage.sumOfChanges.whites[i] = mainImage.imageData.data[i];
-      // mainImage.sumOfChanges.blacks[i] = mainImage.imageData.data[i];
-      // mainImage.sumOfChanges.clarity[i] = mainImage.imageData.data[i];
-      // mainImage.sumOfChanges.vibrance[i] = mainImage.imageData.data[i];
-      // mainImage.sumOfChanges.saturation[i] = mainImage.imageData.data[i];
     }
     mainImage.sumOfChanges.brightness.fill(128);
     mainImage.sumOfChanges.contrast.fill(128);
