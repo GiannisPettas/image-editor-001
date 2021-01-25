@@ -1,0 +1,162 @@
+<div class="main-app">
+	<nav class="main-navigation-bar">
+		<ul>
+			<li>Αρχείο</li>
+			<li>Επεξεργασία</li>
+			<li>Εικόνα</li>
+			<li>Επίπεδο</li>
+			<li>Επιλογή</li>
+			<li>Φίλτρο</li>
+			<li>Προβολή</li>
+			<li>Βοήθεια</li>
+		</ul>
+	</nav>
+	<section class="top-tool-options"></section>
+	<div class="workspace">
+		<canvas class="main-canvas"></canvas>
+		<canvas class="background-canvas"></canvas>
+		<div class="loading">
+			<p>ΦΟΡΤΩΝΕΙ....</p>
+		</div>
+	</div>
+	<section class="tools">
+		<div><img src="./svg/arrange.svg" /></div>
+			<div><img src="./svg/crop.svg" /></div>
+				<div><img src="./svg/lasso.svg" /></div>
+	</section>
+	<section class="right-menu-bar">
+		<div class="histogram menu-bar">
+			<p>Ιστόγραμμα</p>
+		</div>
+		<div class="navigation menu-bar">
+			<p>Πλοήγηση</p>
+			<div class="navigation-UI"></div>
+		</div>
+		<div class="basic-filters menu-bar">
+			<p>Βασικά φίλτρα</p>
+			<div class="brightness basic-filters-UI">
+				<label for="brightness">Φωτεινότητα</label>
+				<input
+          type="range"
+          name="brightness"
+          class="slider"
+          value="0"
+          min="-127"
+          max="127"
+          disabled
+        />
+				<input type="text" value="0" maxlength="4" size="1" />
+      </div>
+				<div class="contrast basic-filters-UI">
+					<label for="contrast">Αντίθεση</label>
+					<input
+          type="range"
+          name="contrast"
+          class="slider"
+          value="0"
+          min="-127"
+          max="127"
+          disabled
+        />
+					<input type="text" value="0" maxlength="4" size="1" />
+      </div>
+					<div class="highlights basic-filters-UI">
+						<label for="highlights">Φωτεινά σημεία</label>
+						<input
+          type="range"
+          name="highlights"
+          class="slider"
+          value="0"
+          min="-127"
+          max="127"
+          disabled
+        />
+						<input type="text" value="0" maxlength="4" size="1" />
+      </div>
+						<div class="shadows basic-filters-UI">
+							<label for="shadows">Σκοτεινά σημεία</label>
+							<input
+          type="range"
+          name="shadows"
+          class="slider"
+          value="0"
+          min="-127"
+          max="127"
+          disabled
+        />
+							<input type="text" value="0" maxlength="4" size="1" />
+      </div>
+							<div class="whites basic-filters-UI">
+								<label for="whites">Λευκά</label>
+								<input
+          type="range"
+          name="whites"
+          class="slider"
+          value="0"
+          min="-127"
+          max="127"
+          disabled
+        />
+								<input type="text" value="0" maxlength="4" size="1" />
+      </div>
+								<div class="blacks basic-filters-UI">
+									<label for="blacks">Μαύρα</label>
+									<input
+          type="range"
+          name="blacks"
+          class="slider"
+          value="0"
+          min="-127"
+          max="127"
+          disabled
+        />
+									<input type="text" value="0" maxlength="4" size="1" />
+      </div>
+									<div class="clarity basic-filters-UI">
+										<label for="clarity">Διαύγεια</label>
+										<input
+          type="range"
+          name="clarity"
+          class="slider"
+          value="0"
+          min="-127"
+          max="127"
+          disabled
+        />
+										<input type="text" value="0" maxlength="4" size="1" />
+      </div>
+										<div class="vibrance basic-filters-UI">
+											<label for="vibrance">Ζωντάνια</label>
+											<input
+          type="range"
+          name="vibrance"
+          class="slider"
+          value="0"
+          min="-127"
+          max="127"
+          disabled
+        />
+											<input type="text" value="0" maxlength="4" size="1" />
+      </div>
+											<div class="saturation basic-filters-UI">
+												<label for="saturation">Κορεσμός</label>
+												<input
+          type="range"
+          name="saturation"
+          class="slider"
+          value="0"
+          min="-127"
+          max="127"
+          disabled
+        />
+												<input type="text" value="0" maxlength="4" size="1" />
+      </div>
+											</div>
+	</section>
+	<section class="footer-image-slider-wrapper">
+		<div class="footer-image-slider"></div>
+		<div class="slider-scroller">
+			<input type="range" name="slider-scroller" min="0" max="999" value="0" />
+    </div>
+	</section>
+</div>
